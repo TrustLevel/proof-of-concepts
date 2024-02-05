@@ -1,0 +1,125 @@
+article_id;title;body;url;date;author;publisher;country;language;type;tags;expected_label;expected_score
+0;I like you. I love you;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.989
+1;You won't believe what this celebrity did on live TV!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.8
+2;Shocking revelations about the secret life of your favorite actor!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.7
+3;Unlock the hidden secrets to instant weight loss with this one weird trick!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.9
+4;Is this the cure for aging? Scientists say yes!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.85
+5;Top 10 unbelievable facts that will blow your mind!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.8
+6;Exposed! The truth behind the viral conspiracy that the government doesn't want you to know!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.75
+7;This simple hack will make you a millionaire in just 30 days!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.9
+8;You're wasting money on groceries! Discover the ultimate money-saving tips now!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.8
+9;Breaking news: Alien invasion imminent? Find out the shocking details here!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.7
+10;Are we living in a simulated reality? Scientists reveal mind-blowing evidence!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.85
+11;Unmasking the hidden dangers in your everyday household items!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.75
+12;The secret to becoming irresistibly attractive – revealed by experts!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.9
+13;Is your phone spying on you? Shocking truth uncovered!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.8
+14;Why everyone is talking about this mysterious new diet trend!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.85
+15;10 signs you're destined for success – number 7 will surprise you!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.8
+16;Exposed! The hidden dangers lurking in your favorite fast food items!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.7
+17;Don't buy another beauty product until you read this shocking report!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.9
+18;Is your relationship in danger? Discover the warning signs now!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.8
+19;The truth about the government's secret experiments – prepare to be shocked!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.75
+20;This one trick will boost your IQ by 20 points – proven by science!;;;05.02.24;ChatGPT 3.5;;;english;;;Clickbait;0.9
+21;Tips for maintaining a healthy work-life balance;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+22;Understanding the benefits of daily meditation for stress relief;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+23;Exploring the history and cultural significance of traditional Japanese tea ceremonies;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.8
+24;The science behind the importance of regular exercise for overall well-being;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+25;How to cultivate a positive mindset and improve mental health;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+26;A beginner's guide to learning a new language effectively;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+27;The impact of climate change on wildlife conservation efforts;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.8
+28;Understanding the principles of sustainable living and eco-friendly practices;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+29;Exploring the diverse world of classical literature and its enduring relevance;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+30;The benefits of adopting a rescue pet and supporting animal shelters;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.8
+31;Tips for creating a productive and organized home office space;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+32;Understanding the basics of financial literacy for long-term success;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+33;Exploring the cultural richness of traditional folk music around the world;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.8
+34;How to develop effective communication skills in both personal and professional settings;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+35;The importance of fostering creativity in children for their overall development;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+36;Tips for responsible and sustainable tourism to protect the environment;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.8
+37;Understanding the principles of effective time management for increased productivity;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+38;Exploring the fascinating world of astronomy and the wonders of the universe;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+39;The health benefits of a balanced diet and mindful eating habits;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+40;Tips for maintaining strong and healthy relationships with friends and family;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+41;Unbelievable! You won't believe what this cat can do!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.8
+42;Secret revealed: The one food you should never eat for a flat stomach!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.75
+43;Is this the future of technology? Mind-blowing innovations you need to see!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.85
+44;Shocking celebrity transformations – you won't recognize them!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.8
+45;Discover the hidden powers of your mind with this ancient technique!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.9
+46;10 signs you're smarter than you think – number 7 will amaze you!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.85
+47;The ultimate life hack for unlimited energy – try it now!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.9
+48;Exposed! The secret diet that has Hollywood stars in a frenzy!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.8
+49;This simple trick will make your plants grow 10 times faster!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.85
+50;Is your job making you age faster? Find out the shocking truth!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.75
+51;Unveiling the mysterious power of crystals for healing and positivity;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.9
+52;Are we living in a parallel universe? Scientists say yes!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.85
+53;Top 5 mind-boggling mysteries that science can't explain!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.8
+54;Exposed! The hidden dangers in your favorite skincare products!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.7
+55;You won't believe what this 100-year-old woman eats every day!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.8
+56;Is your phone listening to your conversations? Shocking truth uncovered!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.75
+57;Unlock the secret to instant happiness with this simple trick!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.9
+58;The truth about aliens – government insider reveals shocking information!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.7
+59;This weird trick will make you a social media sensation overnight!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.85
+60;Exposed! The real reason why your crush hasn't texted back!;;;05.02.24;ChatGPT 3.5;;;english;;;ClickBait;0.8
+61;Practical tips for improving your time management skills;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+62;Exploring the beauty of classical art through the ages;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+63;Understanding the fundamentals of effective communication in the workplace;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+64;The benefits of a balanced diet for a healthier lifestyle;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+65;Tips for creating a cozy and inviting home atmosphere;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+66;The impact of mindfulness on stress reduction and mental well-being;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+67;Exploring the wonders of nature through responsible ecotourism;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+68;Cultivating a positive mindset for personal and professional success;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+69;The importance of lifelong learning for personal growth;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+70;Tips for building and maintaining strong relationships with loved ones;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+71;Understanding the significance of regular exercise for overall health;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+72;Exploring the cultural diversity of world music traditions;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+73;Practical ways to incorporate sustainable practices into your daily life;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+74;The benefits of adopting a pet from a local animal shelter;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+75;Tips for effective goal-setting and achieving long-term success;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+76;The impact of positive parenting on children's development;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+77;Exploring the world of astronomy: A beginner's guide;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+78;The joys of reading: Nurturing a love for literature in children;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+79;Practical steps for creating a productive home office environment;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.9
+80;The art of effective decision-making in various aspects of life;;;05.02.24;ChatGPT 3.5;;;english;;;Normal;0.85
+81;Palestinian Leader Calls on ICC to Speed Up Israeli War Crimes Trial;;https://sputnikglobe.com/20231203/palestinian-leader-calls-on-icc-to-speed-up-israeli-war-crimes-trial--reports-1115353279.html;03.12.23;John Macdougall;Sputnik;Russia;english;Report;Unrest Conflict War;Normal;0.99
+82;Israel Shells Lebanon in Retaliatory Move;;https://sputnikglobe.com/20231204/israel-shells-lebanon-in-retalitory-move--statement--1115368224.html;04.12.23;Menahem Kahana;Sputnik;Russia;english;Opinion;Unrest Conflict War;Normal;0.99
+83;Israel-Palestine conflict: A brief history in maps and charts;;https://www.aljazeera.com/news/2023/11/27/palestine-and-israel-brief-history-maps-and-charts;27.11.23;Mohammed Haddad, Alia Chughtai;Aljazeera;United States of Emirates;english;Explainer;Unrest Conflict War;Normal;0.99
+84;"More than a month without water, food, healthcare in Gaza amid Israel war
+The United Nations says the enclave's health, sanitation, water and food services are nearing the breaking point.";;https://www.aljazeera.com/news/2023/11/7/one-month-of-no-water-food-and-healthcare-for-gaza;07.11.23;Marium Ali, Alia Chughtai;Aljazeera;United States of Emirates;english;Explainer;Unrest Conflict War;Normal;0.99
+85;Israel-Palestine war: Why the West can't conceive of a Palestinian right to security;;https://www.middleeasteye.net/opinion/israel-palestine-war-west-palestinian-right-security-conceive-why ;30.11.23;Nadim Khoury;Middle East Eye;United Kingdom;english;Opinion;Unrest Conflict War;Normal;0.99
+86;Why has the Gaza ceasefire come to an end?;;https://www.bbc.com/news/world-middle-east-67589259;02.12.23;Oliver Slow;BBC News;United Kingdom;english;News;Unrest Conflict War;Normal;0.99
+87;Israel says ground forces operating across Gaza Strip;;https://koreatimes.co.kr/www/world/2023/12/501_364393.html;04.12.23;Reuters;The Korean Times;South Korea;english;Report;Unrest Conflict War;Normal;0.99
+88;Muslim activist shocked by world ignoring Hamas rapes of Israelis;;https://www.israelhayom.com/2023/12/03/muslim-activist-shocked-by-world-ignoring-hamas-rapes-of-israelis/;03.12.23;Dana Ben-Shimon;Hayom;Israel;english;Magazine;Religion Belief, Politics;Normal;0.99
+89;Are prisoner releases pushing West Bank Palestinians into Hamas's arms?;;https://www.timesofisrael.com/are-prisoner-releases-pushing-west-bank-palestinians-into-hamass-arms/;04.12.23;Gianluca Pacchiani;Times of Israel;Israel;english;Analysis;Unrest Conflicts War, Crime Law Justice ;Normal;0.99
+90;Hamas' depravity reminds this doctor to rail against dehumanization and fight for human dignity. We must not normalize or rationalize depravity in any way.;;https://www.foxnews.com/opinion/hamas-depravity-reminds-us-fight-against-dehumanization;03.12.23;Marc Siegel;Fox News;United States of America;english;Opinion;Unrest Conflict War;Normal;0.99
+91;What we know about Israel-Hamas Gaza deal on hostages;;https://www.bbc.com/news/world-middle-east-67493713;22.11.23;David Gritten;BBC News;United Kingdom;english;News;Unrest Conflict War;Normal;0.99
+92;Israel defeating Hamas aids Arab states, even if they are afraid to admit it. UN sent $4.5 billion in aid to Gaza, but 80% of residents are poor and Hamas's leaders are worth $11 billion.;;https://www.foxnews.com/opinion/israel-defeating-hamas-aids-arab-states-even-they-afraid-admit;20.11.23;Michael R. Pompeo;Fox News;United States of America;english;Opinion;Religion Belief, Politics;Normal;0.99
+93;"Netanyahu's goal is to destroy Gaza's political and social infrastructure, not destroy Hamas. Destroying Hamas is merely a battlecry, a promise he's selling the Israeli public. If he believes it, then he has no basic understanding of history or physics. 
+
+Netanyahu wants to exert Statelessness over the Palestinian People, both as a physical state of being and�most importantly�as an inescapable political fate. It will be his swan song, as he knows his position as Prime Minister will likely end with the end of this war. 
+
+The targeting of government ministries, hospitals, universities, and media institutions (and the professionals that run them) isn't arbitrary or irrational. It is a precise and calculated effort to render Gaza irredeemably uninhabitable. One, to forcibly create a population of refugees and, two, to abort all of the Strip's political prospects. 
+
+The news that a US-Israeli team is already discussing how to use Gaza's gas proves what many have been saying: this is about occupying our lands and natural resources. This is about expansion and domination. 
+
+But even if a new status-quo is forced on Palestinians, Netanyahu knows, as history has taught us, that violence begets violence. The genocide waged in Gaza is Zionism stripped naked, a process accelerated by one man's desperate attempt at a dramatic exit.";;https://twitter.com/m7mdkurd/status/1727129791986270527;22.11.23;Mohammed El-Kurd;Twitter;;english;Tweet;Unrest Conflict War;Normal;0.99
+94;"This is the full picture: 
+
+In Gaza, a Palestinian carried a child's corpse whose skull is hollow but his eyes continued to blink. I saw the video. He was retrieved after hours of digging in the rubble. More airstrikes and less medics as time goes by. Millions are enduring such spectacular violence: one man once expelled from his home decades ago now forced to flee again�for miles, on foot. He tires, he worsens, he's in the ICU, praying that those resisting the bombs will defend him. Then, Israeli soldiers invade the hospital. They use live ammunition and find a calendar. 
+
+In another world, on university campuses, some Jewish students�coddled by their administrations�cite their fear of a protest chant as an indicator that a Second Holocaust is imminent. It's not rational, but understandable. They are not feigning: the fear is so real it can conjure the Gestapo in the halls of the Ivy Leagues. Then they are guests on television networks, narrating their harrowing life at the academy. 
+
+You almost laugh but it isn't a joke. It's psychosis.";;https://twitter.com/m7mdkurd/status/1725243936401215743;16.11.23;Mohammed El-Kurd;Twitter;;english;Tweet;Religion Belief, Politics;Clickbait;0.71
+95;Netanyahu's goal is to destroy Gaza's political and social infrastructure, not destroy Hamas.;;https://twitter.com/m7mdkurd/status/1727129791986270527;22.11.23;Mohammed El-Kurd;Twitter;;english;Tweet;Unrest Conflict War;Normal;0.100
+96;This is the full picture:;;https://twitter.com/m7mdkurd/status/1725243936401215743;16.11.23;Mohammed El-Kurd;Twitter;;english;Tweet;Religion Belief, Politics;Clickbait;0.98
+97;Israel embraces Italian neo-fascist;;https://www.aljazeera.com/news/2003/11/24/israel-embraces-italian-neo-fascist;24.11.23;Khalid Amayreh;https://www.aljazeera.com;;english;;;Normal;0.99
+98;Woman killed in Israeli raid in Gaza;;https://www.aljazeera.com/news/2003/11/6/woman-killed-in-israeli-raid-in-gaza;06.11.03;Khalid Amayreh;https://www.aljazeera.com;;english;;;Normal;0.99
+99;Jewish settlers usurp Palestinian water;;https://www.aljazeera.com/news/2003/10/16/jewish-settlers-usurp-palestinian-water;16.10.03;Khalid Amayreh;https://www.aljazeera.com;;english;;News;Normal;0.99
+100;White House Condemns Killing Of Al Jazeera Journalist In Israeli Raid;;https://www.huffpost.com/entry/state-department-killing-al-jazeera-journalist-israel_n_627bdb57e4b046ad0d850c49;11.05.22;Sanjana Karanth;HuffPost;;english;;Politics;Normal;0.99
+101;Grandstanding Fears As Norwegian Mass Killer Seeks Parole;;https://www.huffpost.com/entry/bc-eu-norway-breivik-parole-hearing_n_61e53d55e4b03874b2da3a54;17.01.22;AP;HuffPost;;english;;World News;Normal;0.99
+102;The Funniest Tweets From Parents This Week;;https://www.huffpost.com/entry/funniest-parenting-tweets_l_61e08ce6e4b0f6b1933b0afc;14.01.22;Caroline Bologna;HuffPost;;english;;Parenting;Clickbait;0.99
+103;It's OK If You Don't Have Any Friends At Work;;https://www.huffpost.com/entry/dont-have-friends-at-work_l_61defa66e4b0ae44b31a40ef;13.01.22;Monica Torres;HuffPost;;english;;Work/Life;Clickbait;0.99
+104;12 Politics Stories We Loved In 2021;;https://www.huffpost.com/entry/huffpost-politics-stories-2021_n_61c53854e4b0d637ae8bee47;28.12.21;Amanda Terkel;HuffPost;;english;;Politics;Clickbait;0.99
+105;Firing Upheld For Los Angeles Cops Who Ignored Active Robbery To Hunt Pokemon;;https://www.huffpost.com/entry/cops-fired-pokemon-go-los-angeles_n_61dce641e4b0bb04a648eea0;11.01.22;Josephine Harvey;HuffPost;;english;;U.S. News;Clickbait;0.99
+106;Mourners Call For Justice For 14-Year-Old Shot By LAPD;;https://www.huffpost.com/entry/funeral-valentina-orellana-peralta-lapd-rev-sharpton_n_61dc97d5e4b0bb04a6489d88;10.01.22;Sarah Ruiz-Grossman;HuffPost;;english;;Latino Voices;;
+107;Luring Jews to Israel proves difficult;;https://www.aljazeera.com/news/2003/11/20/luring-jews-to-israel-proves-difficult;20.11.03;Khalid Amayreh;https://www.aljazeera.com;;english;;;Clickbait;0.99
+108;Germany Shuts Down Half Of Its 6 Remaining Nuclear Plants;;https://www.huffpost.com/entry/eu-germany-nuclear-shutdown_n_61cf0ecae4b0c7d8b8a3d6f8;31.12.21;AP;HuffPost;;english;;World News;;
