@@ -1,0 +1,22 @@
+sentence;label;score
+Women are naturally more nurturing than men.;biased;0.8
+Immigrants are responsible for the rise in crime rates.;biased;0.7
+People from rural areas are less intelligent than those from urban areas.;biased;0.6
+The government's policies always favor the rich.;biased;0.9
+Muslims are inherently violent.;biased;0.75
+LGBTQ+ individuals are mentally ill.;biased;0.85
+People with disabilities are a burden on society.;biased;0.7
+Men are better leaders than women.;biased;0.8
+Asians are naturally good at math.;biased;0.65
+Millennials are lazy and entitled.;biased;0.75
+The sun rises in the east.;non biased;0.2
+Water freezes at 0 degrees Celsius.;non biased;0.3
+The Earth orbits around the sun.;non biased;0.2
+The acceleration due to gravity is approximately 9.8 m/s^2.;non biased;0.3
+Plants require sunlight for photosynthesis.;non biased;0.3
+Oxygen is necessary for human survival.;non biased;0.3
+DNA is the genetic material found in cells.;non biased;0.3
+The Pythagorean theorem states that in a right triangle, the square of the length of the hypotenuse is equal to the sum of the squares of the lengths of the other two sides.;non biased;0.2
+Water consists of two hydrogen atoms and one oxygen atom.;non biased;0.3
+The Earth is approximately 4.5 billion years old.;non biased;0.2
+The Earth is approximately 1 million years old.;biased;0.9
