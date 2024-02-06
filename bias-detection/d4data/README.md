@@ -34,5 +34,18 @@ The test data was generated with ChatGPT 3.5
 </details>
 
 ## Setup & Execution
-* Initialize virtual environment using `pipenv install`
-* Execute program `pipenv run python main.py`
+* Initialize virtual environment using `pipenv install --dev`
+* To execute the PoC execute program `pipenv run python poc.py`
+* To run the server locally
+    * Run `pipenv run gunicorn -b 0.0.0.0:8080 app:app --chdir ./src`
+    * Test the server using `curl -X POST http://localhost:8080/analyze  -H "Content-Type: application/json" -d '{"text":"Hallo"}'`
+
+**Optional**
+* Make sure hadolint for linting Dockerfile is installed `brew install hadolint`
+
+## Docker image
+* Prepare *requirements.txt*
+    * With `pipenv requirements > src/requirements.txt` you can generate the rquirements.txt file
+* Build docker image locally `docker build -t bias-detection .`
+* Run docker image locally `docker run -p 8080:5000 -d bias-detection`
+* Test if container is running correctly: `curl -X POST http://localhost:8080/analyze  -H "Content-Type: application/json" -d '{"text":"Hallo"}'`

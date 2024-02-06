@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 transformers = "==4.37.2"
 tensorflow = "==2.15.0"
+flask = "==3.0.2"
+gunicorn = "==21.2.0"
 
 [dev-packages]
 
