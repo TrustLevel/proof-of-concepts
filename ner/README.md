@@ -20,6 +20,12 @@ playwright (scraper)
 playwright install chromium
 ```
 
+env vars
+```
+cp .env.example .env
+```
+
+⚠️ Dont forget to change the env vars accordingly
 
 ## Running
 

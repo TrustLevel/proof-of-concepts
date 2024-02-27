@@ -4,3 +4,5 @@ wheel
 spacy
 streamlit
 pandas
+openai
+python-dotenv
