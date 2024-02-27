@@ -1,0 +1,6 @@
+playwright
+setuptools
+wheel
+spacy
+streamlit
+pandas
