@@ -66,5 +66,7 @@ if input_data:
         entities = process_input(input_type, input_data)
     
         data = [(entity, ', '.join(values)) for entity, values in entities.items()]
-    
+
+        st.subheader("Named Entities")
         st.table(data)
+        st.markdown("Description of entities can be found [here](https://stackoverflow.com/questions/76206507/spacy-where-are-terminologies-defined)")
