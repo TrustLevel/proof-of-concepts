@@ -1,5 +1,15 @@
 
-# Project for exrtracting named entities out of articles (URLs or Text) & user queries
+# TrustLevel NER Extractor
+
+This is a PoC for creating a NER system to extract entities out of articles (both URL form or Text) as well as user queries to aid in further KG querying. 
+
+### Demos
+
+|     |     |     |
+| --- | --- | --- |
+| **Article URL** | **Article Text** | **User Query** |
+| ![Article URL](/ner/assets/article_url.png) | ![Article Text](/ner/assets/article_text.png) | ![User Query](/ner/assets/user_query.png) |
+
 
 ## Setup
 
