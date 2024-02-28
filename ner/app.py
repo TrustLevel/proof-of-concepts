@@ -15,15 +15,17 @@ def is_url(input_string):
 def process_input(input_type, input_data):
     if input_type == 'URL':
         text = scrape_text(input_data)
+        st.text_area("Extracted text:", value=text, height=100, disabled=True)
     elif input_type == 'User Query':
         text = rewrite_query(input_data)
-        st.text_area("Rewritten Query (optimized for entity extraction):", value=text, height=100, disabled=True)
+        st.text_area("Rewritten Query (optimized for entity extraction):", value=text, height=50, disabled=True)
     else:
         text = input_data
     entities = extract_entities(text)
     return entities
 
-st.title("Content Processor")
+st.title("TrustLevel NER Extractor")
+st.text("Works for Articles (URL or Text) and Queries")
 
 input_type = st.selectbox("Select input type:", ["URL", "Article Text", "User Query"])
 
@@ -31,15 +33,28 @@ if st.button('Load Example'):
     if input_type == "URL":
         st.session_state.input_data = "https://sputnikglobe.com/20231203/palestinian-leader-calls-on-icc-to-speed-up-israeli-war-crimes-trial--reports-1115353279.html"
     elif input_type == "Article Text":
-        st.session_state.input_data = """Palestinian Leader Calls on ICC to Speed Up Israeli War Crimes Trial – Reports
-        10:01 GMT 03.12.2023 (Updated: 09:24 GMT 05.12.2023)
-        Israeli Military Struck Hamas Facilities in Gaza Strip – Statement
-        The Israel Defense Forces (IDF) said on Sunday it had struck at infrastructure and weapons storage facilities of Palestinian group Hamas in the Gaza Strip, eliminating five fighters of the movement. The Israeli naval troops also struck at Hamas targets over the past 24 hours, the statement read. On October 7, Hamas launched a large-scale rocket attack against Israel from the Gaza Strip and breached the border. Israel launched retaliatory strikes and ordered a complete blockade of Gaza, cutting off supplies of water, food, and fuel. On October 27, Israel launched a ground incursion into the Gaza Strip with the declared goal of eliminating Hamas fighters and rescuing the hostages.
-        Last week, Qatar mediated a deal between Israel and Hamas on a temporary truce and the exchange of some of the prisoners and hostages, as well as the delivery of humanitarian aid into the Gaza Strip. The truce was extended several times, but on Friday, December 1, the Israeli military resumed fighting against Hamas in the Gaza Strip, saying the group had violated the humanitarian pause by opening fire on Israeli territory.
-        Israeli Airstrikes on Refugee Camp in Gaza Claim Lives of 14 People – Reports
-        At least 14 people, including children and women, were killed in the Israeli airstrikes on the Nuseirat refugee camp in the central Gaza Strip, Palestinian news agency reported on Sunday. The death toll is expected to increase as rescue operations continue, the report added.
-        Shia Muslim Militant Groups Attacked US Base in Iraqi Kurdistan - Statement
-        The Islamic Resistance in Iraq, which includes Shia Muslim militant groups, said on Saturday that it had carried out a drone attack on a US base at Erbil Airport in Iraqi Kurdistan. "In response to the crimes the enemy is committing against our people in Gaza, Iraqi Islamic Resistance fighters used a drone to attack the US occupation base at Erbil Airport," the group said in a statement. On Thursday, Pentagon Deputy Press Secretary Sabrina Singh said that US forces in Iraq and Syria had been attacked 74 times since October.
+        st.session_state.input_data = """Israel Shells Lebanon in Retaliatory Move – Statement
+        09:20 GMT 04.12.2023 (Updated: 09:39 GMT 04.12.2023)
+        © AFP 2023 / MENAHEM KAHANA
+        Subscribe
+        The Israel Defense Forces said in a statement that they had documented shelling from Lebanon towards IDF outpost and opened fire in response.
+        “A number of mortar shell launches from Lebanon toward an IDF post in the area of Yiftah were identified. In response, IDF artillery struck the sources of the fire,” the Israeli army said on its official Telegram channel.
+        Earlier, another round of shelling was documents, which resulted in three injured Israeli soldiers.
+        “Three IDF soldiers were lightly injured and evacuated to receive medical treatment. Their families have been notified,” the statement read. The situation in South Lebanon heated up after Israel had its launched military operation in the Gaza Strip against Hamas. The Lebanese militant organization Hezbollah started shelling Israeli territory, with the IDF responding in kind.
+        West Bank Death Toll From Israeli Fire Reaches 464 Since Early 2023 - Palestinian Ministry
+        The death toll in the West Bank as a result of clashes with Israeli forces has reached 464 since the beginning of 2023, including 256 since October 7, the Palestinian Health Ministry said on Monday.
+        "The death toll in the West Bank from Israeli army fire is 464 since the beginning of the year, including 256 since October 7," the ministry said in a statement.
+        World
+        Palestine-Israel conflict
+        Israeli-Palestinian conflict
+        Israel-Gaza conflict
+        Israel Defense Forces (IDF)
+        Gaza Strip
+        Hamas
+        Hezbollah
+        Middle East
+        Fresh and edgy: visit our channel on TikTok
+        Follow
         """
     else:
         st.session_state.input_data = "israelian palestine conflict"

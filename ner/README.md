@@ -1,5 +1,5 @@
 
-# Project for augmenting TrustLevel KG `input.csv` with entities
+# Project for exrtracting named entities out of articles (URLs or Text) & user queries
 
 ## Setup
 
@@ -15,7 +15,7 @@ spacy (ner)
 python -m spacy download en_core_web_trf
 ```
 
-playwright (scraper)
+playwright (web scraper)
 ```
 playwright install chromium
 ```
