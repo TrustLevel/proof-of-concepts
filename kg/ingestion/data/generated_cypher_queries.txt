@@ -1,0 +1,18 @@
+MERGE (article:Article {title: 'Palestinian Leader Calls on ICC to Speed Up Israeli War Crimes Trial', publicationdate: '3/12/2023', trustlevel: 0.5, biasscore: 0.0, polarityscore: 0.0})
+MERGE (author:Person {name: 'John Macdougall'})
+MERGE (author)-[:WRITES]->(article)
+MERGE (publisher:Publisher {name: 'Sputnik'})
+MERGE (publisher)-[:PUBLISHES]->(article)
+;
+MERGE (article:Article {title: 'Israel Shells Lebanon in Retaliatory Move', publicationdate: '4/12/2023', trustlevel: 0.5, biasscore: 0.0, polarityscore: 0.0})
+MERGE (author:Person {name: 'Menahem Kahana'})
+MERGE (author)-[:WRITES]->(article)
+MERGE (publisher:Publisher {name: 'Sputnik'})
+MERGE (publisher)-[:PUBLISHES]->(article)
+;
+MERGE (article:Article {title: 'Israel-Palestine conflict: A brief history in maps and charts', publicationdate: '27/11/2023', trustlevel: 0.5, biasscore: 0.0, polarityscore: 0.0})
+MERGE (author:Person {name: 'Mohammed Haddad'})
+MERGE (author)-[:WRITES]->(article)
+MERGE (publisher:Publisher {name: ' Alia Chughtai'})
+MERGE (publisher)-[:PUBLISHES]->(article)
+;

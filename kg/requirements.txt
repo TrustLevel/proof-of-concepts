@@ -1,0 +1,9 @@
+playwright
+setuptools
+wheel
+spacy
+streamlit
+pandas
+openai
+python-dotenv
+neo4j

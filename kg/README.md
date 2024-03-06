@@ -1,7 +1,10 @@
 
-# TrustLevel NER Extractor
+# TrustLevel KG 
 
-This is a PoC for creating a NER system to extract entities out of articles (both URL form or Text) as well as user queries to aid in further KG querying. 
+This is a PoC for creating the KG according to following diagram.
+
+![KG System Architecture](/kg/assets/diagram.drawio.svg)
+
 
 ### Demos
 
@@ -15,17 +18,16 @@ This is a PoC for creating a NER system to extract entities out of articles (bot
 
 dependencies
 ```
-python3 -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-```
+``` 
 
 spacy (ner)
 ```
 python -m spacy download en_core_web_trf
 ```
 
-playwright (web scraper)
 ```
 python -m playwright install chromium
 ```
