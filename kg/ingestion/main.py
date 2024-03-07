@@ -5,6 +5,11 @@ from concurrent.futures import ProcessPoolExecutor
 from typing import List, Optional
 
 from dotenv import load_dotenv
+
+load_dotenv("../.env")
+load_dotenv(".env")
+
+from nlp import extract_article_content
 from pydantic import BaseModel
 from scraper import scrape_article_text
 
@@ -14,12 +19,11 @@ from ner import get_entities_from_article_content
 def blue_print(text: str) -> None:
     print(f"\033[94m{text}\033[0m")
 
-load_dotenv()
 
 class Article(BaseModel):
     title: str
     url: str
-    scraped_content: Optional[str] = None
+    content: Optional[str] = None
     named_entities: Optional[dict] = {}
     isodate: str
     author: str
@@ -44,8 +48,9 @@ def load_articles_from_file(path: str) -> List[Article]:
 
 def process_article(article):
     blue_print(f"Processing '{article.title}'.")
-    article.scraped_content = scrape_article_text(article.url) 
-    named_entities = get_entities_from_article_content(article.scraped_content)
+    scraped_content = scrape_article_text(article.url) 
+    article.content = extract_article_content(article_title=article.title, scraped_text=scraped_content)
+    named_entities = get_entities_from_article_content(article.content)
     entity_dict = {}
     for entity in named_entities:
         if entity.type not in entity_dict:
@@ -83,13 +88,30 @@ def generate_cypher_queries(csv_file_path):
                 f"MERGE (publisher:Publisher {{name: '{row['Publisher'].replace("'", "\\'")}'}})\n"
                 f"MERGE (publisher)-[:PUBLISHES]->(article)\n"
             )
+            
+            named_entities = json.loads(row['NamedEntities'])
+            entity_queries = ""
+            merged_entities = set()  # Keep track of entities that have already been merged
+
+            for entity_type, entities in named_entities.items():
+                for entity in entities:
+                    entity_safe = entity.replace("'", "\\'")  # Make entity safe for Cypher query
+                    entity_key = f"{entity_type}:{entity_safe}"  # Unique key for each entity
+                    
+                    if entity_key not in merged_entities:
+                        # Only generate MERGE statement if this entity hasn't been merged yet
+                        entity_queries += f"MERGE ({entity_type}_{entity_safe.replace(' ', '_').replace('-', '_')}:{entity_type.capitalize()} {{name: '{entity_safe}'}})\n"
+                        merged_entities.add(entity_key)
+                    
+                    # Use the entity variable for creating the relationship
+                    entity_queries += f"MERGE (article)-[:MENTIONS]->({entity_type}_{entity_safe.replace(' ', '_').replace('-', '_')})\n"
+
             # Combining the queries for the current row
-            combined_query = article_query + author_query + publisher_query
+            combined_query = article_query + author_query + publisher_query + entity_queries
             
             queries.append(combined_query)
     
     return queries
-
 
 def main():
     articles = load_articles_from_file("data/input.csv")
@@ -106,7 +128,7 @@ def main():
             writer.writerow({
                 'Title': article.title,
                 'Url': article.url,
-                'Scraped Content': article.scraped_content,
+                'Scraped Content': article.content,
                 'Date': article.isodate,
                 'Author': article.author,
                 'Publisher': article.publisher,
@@ -118,15 +140,21 @@ def main():
     queries = generate_cypher_queries("data/processed_input.csv")
 
     # Write the queries to generated_cypher_queries.txt
-    with open("data/generated_cypher_queries.cypherl", "w") as file:
+    with open("queries/create_graph_content.cypherl", "w") as file:
         for query in queries:
             file.write(query + ";\n")
 
 
     from kg import execute_queries_from_file
 
-    execute_queries_from_file("data/generated_cypher_queries.cypherl")
+    execute_queries_from_file("queries/wipe_graph.cypherl")
+    execute_queries_from_file("queries/create_graph_content.cypherl")
 
 
 if __name__ == "__main__":
     main()
+    # scraped_text = scrape_article_text("https://sputnikglobe.com/20231203/palestinian-leader-calls-on-icc-to-speed-up-israeli-war-crimes-trial--reports-1115353279.html")
+    # article_title = "Palestinian Leader Calls on ICC to Speed Up Israeli War Crimes Trial"
+    # curated_text = extract_article_content(article_title, scraped_text)
+    # blue_print(f"\nSCRAPED\n{scraped_text}")
+    # blue_print(f"\nCURATED\n{curated_text}")
