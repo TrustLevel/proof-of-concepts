@@ -8,10 +8,13 @@ This is a PoC for creating the KG according to following diagram.
 
 ### Demos
 
-|     |     |     |
-| --- | --- | --- |
-| **Article URL** | **Article Text** | **User Query** |
-| ![Article URL](/ner/assets/article_url.png) | ![Article Text](/ner/assets/article_text.png) | ![User Query](/ner/assets/user_query.png) |
+
+|     |     |
+| --- | --- |
+| **KG Schema** | **Querying example** | 
+| ![KG Schema](/kg/ingestion/assets/kg_schema.png) | ![Querying Example](/kg/querying/assets/querying_example.png) |
+
+
 
 
 ## Setup
@@ -41,6 +44,22 @@ cp .env.example .env
 
 ## Running
 
+
+### Ingestion
 ```
+cd ingestion
+python main.py
+```
+ 
+ 💡 If you want to run with custom data, change `data/input.csv` while obbeying the present schema.
+
+
+
+### Querying
+
+<still buggy>
+
+```
+cd querying
 streamlit run app.py
 ```

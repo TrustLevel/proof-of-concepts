@@ -7,3 +7,4 @@ pandas
 openai
 python-dotenv
 neo4j
+streamlit-agraph
