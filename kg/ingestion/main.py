@@ -12,6 +12,7 @@ load_dotenv(".env")
 from nlp import extract_article_content
 from pydantic import BaseModel
 from scraper import scrape_article_text
+from trustlevel import get_trustlevel_from_content
 
 from ner import get_entities_from_article_content
 
@@ -71,12 +72,14 @@ def generate_cypher_queries(csv_file_path):
         for row in reader:
             # Simplification: Assuming trustlevel, bias score, polarity score as default values
             # Adjust or enhance based on actual data availability or estimation logic
-            trustlevel, bias_score, polarity_score = 0.5, 0.0, 0.0
+            trustlevel = get_trustlevel_from_content(row['Scraped Content'])
+            bias_score = trustlevel
+            polarity_score = trustlevel
             
             article_query = (
                 f"MERGE (article:Article {{title: '{row['Title'].replace("'", "\\'")}', "
                 f"publicationdate: '{row['Date']}', trustlevel: {trustlevel}, biasscore: {bias_score}, "
-                f"polarityscore: {polarity_score}}})\n"
+                f"polarityscore: {polarity_score}, url: '{row['Url']}'}})\n"
             )
             
             author_query = (
