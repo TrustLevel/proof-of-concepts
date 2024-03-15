@@ -1,22 +1,15 @@
-import time
-from typing import List, Tuple
+from typing import List
 
 import streamlit as st
-import streamlit.components.v1 as components
 from dotenv import load_dotenv
 
 load_dotenv("../.env")
 load_dotenv(".env")
 
-import webbrowser
-
-from memgraph import fetch_articles_and_relations_for_entities
+from entity_recognition import get_entities_from_text
+from graphdb import fetch_articles_and_relations_for_entities
 from nlp import rewrite_query
-from scraper import get_img_from_url
-from streamlit_agraph import Config, Edge, Node, agraph
-from streamlit_card import card
-
-from ner import get_entities_from_text
+from streamlit_agraph import Edge, Node
 
 
 def draw_knowledge_graph(nodes: List[Node], edges: List[Edge]):
@@ -57,6 +50,7 @@ if execute_button:
         st.subheader("Results:")
         if len(nodes) == 0 and len(edges) == 0:
             st.write("No Results found!. Maybe try to change your query?")
+        
         draw_knowledge_graph(nodes, edges)
         st.subheader("Displayed Articles:")
         columns = st.columns(len(articles))

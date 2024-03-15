@@ -1,0 +1,32 @@
+import json
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv("../.env")
+load_dotenv(".env")
+
+import requests
+
+api_key = os.getenv("TRUSTLEVEL_API_KEY")
+
+def get_trustlevel_from_content(content: str):
+    url = "https://powr86cuh9.execute-api.eu-west-1.amazonaws.com/v1/trustlevels/"
+    headers = {
+        "Content-Type": "application/json",
+        "x-api-key": api_key
+    }
+    data = json.dumps({"text": content})
+    response = requests.post(url, headers=headers, data=data)
+    if response.ok:
+        response_data = response.json()
+        if 'trustlevel' in response_data:
+            return response_data['trustlevel']
+        else:
+            raise ValueError(f"No trust level key found in response. Response: {response_data}")
+    else:
+        raise ConnectionError(f"Failed to get trust level: {response.reason}, Status Code: {response.status_code}")
+
+
+if __name__ == "__main__":
+    print(get_trustlevel_from_content("Israel’s deadly bombardment of Gaza has killed nearly 15,000 people, including 10,000 women and children, in over 50 days, making it the deadliest war for the besieged Palestinian enclave till date.\n\nIsrael has rebuffed calls for a ceasefire as a four-day humanitarian truce comes to an end on November 28. It is unclear whether the truce will be extended.\n\nThe devastation of Gaza and the mounting death toll has triggered worldwide protests, bringing the decades-long issue to the centre-stage of global politics.\n\nThe Balfour declaration\n\nThe Israeli-Palestinian issue goes back nearly a century when Britain, during World War I, pledged to establish a national home for the Jewish people in Palestine under the Balfour Declaration. British troops took control of the territory from the Ottoman Empire at the end of October 1917.\n\nJewish immigration to Palestine\n\nA large-scale Jewish migration to Palestine began, accelerated by Jewish people fleeing Nazism in Europe. Between 1918 and 1947, the Jewish population in Palestine increased from 6 percent to 33 percent.\n\nPalestinians were alarmed by the demographic change and tensions rose, leading to the Palestinian revolt from 1936 to 1939.\n\nMeanwhile, Zionist organisations continued to campaign for a homeland for Jews in Palestine. Armed Zionist militias started to attack the Palestinian people, forcing them to flee. Zionism, which emerged as a political ideology in the late 19th century, called for the creation of a Jewish homeland.\n\nThe UN Partition Plan\n\nAs violence ravaged Palestine, the matter was referred to the newly formed United Nations. In 1947, the UN adopted Resolution 181, which called for the partition of Palestine into Arab and Jewish states, handing over about 55 percent of the land to Jews. Arabs were granted 45 percent of the land, while Jerusalem was declared a separate internationalised territory.\n\nThe city is currently divided between West Jerusalem, which is predominantly Jewish, and East Jerusalem with a majority Palestinian population. Israel captured East Jerusalem after the Six-Day War in 1967 along with the West Bank – a step not recognised by the international community.\n\nThe Old City in occupied East Jerusalem holds religious significance for Christians, Muslims, and Jews. It is home to Al-Aqsa Mosque compound, which is known to Muslims as al-Haram al-Sharif and to Jews as Temple Mount.\n\nIn 1981, the UN designated it a World Heritage Site.\n\nThe Nakba\n\nLeading up to Israel’s birth in 1948, more than 750,000 Palestinians were ethnically cleansed from their homes by Zionist militias. This mass exodus came to be known as the Nakba or catastrophe.\n\nA further 300,000 Palestinians were displaced by the Six-Day War in 1967.\n\nIsrael declared the annexation of East Jerusalem in 1980, but the international community still considers it an occupied territory. Palestinians want East Jerusalem as the capital of their future state.\n\nThe Oslo Accords\n\nIn 1993, Palestinian leader Yasser Arafat and Israeli Prime Minister Yitzhak Rabin signed the Oslo Accords, which aimed to achieve peace within five years. It was the first time the two sides recognised each other.\n\nA second agreement in 1995 divided the occupied West Bank into three parts – Area A, B and C. The Palestinian Authority, which was created in the wake of the Oslo Accords, was offered only limited rule on 18 percent of the land as Israel effectively continued to control the West Bank.\n\nIsraeli settlements and checkpoints\n\nHowever, the Oslo Accords slowly broke down as Israeli settlements, Jewish communities built on Palestinian land in the West Bank, grew at a rapid pace.\n\nThe settlement population in the West Bank and East Jerusalem grew from approximately 250,000 in 1993 to up to 700,000 in September this year. About three million Palestinians live in the occupied West Bank and East Jerusalem.\n\nThe building of Israeli settlements and a separation wall on occupied territories has fragmented the the Palestinian communities and restricted their mobility. About 700 road obstacles, including 140 checkpoints, dot the West Bank. About 70,000 Palestinians with Israeli work permits cross these checkpoints in their daily commute.\n\nSettlements are considered illegal under international law. The UN has condemned settlements, calling it a big hurdle in the realisation of a viable Palestinian state as part of the so-called “two-state solution”.\n\nBlockade of Gaza\n\nIsrael imposed a blockade on Gaza in 2007 after the Hamas group came to power. The siege continues till date. Israel also occupies the West Bank and East Jerusalem – the territories Palestinians want to be part of their future state.\n\nIsrael imposed a total blockade on the Gaza Strip on October 9, cutting its supplies of electricity, food, water, and fuel in the wake of a surprise Hamas attack inside Israel. At least 1,200 people were killed in that attack.\n\nIsrael and Palestine now\n\nThis is what Israel and Palestine look like now.\n\nToday, about 5 million Palestinians live in Gaza, the West Bank and East Jerusalem and 1.6 million Palestinians are citizens of Israel. This makes up about half of their total population. The other half lives in other countries, including Arab countries. There are about 14.7 million Jews around the world today, of which 84 percent live in Israel and the United States. The rest live in other countries including France, Canada, Argentina and Russia.\n\nHere is an account of Palestinian and Israeli lives lost to the violence between 2008 and 2023."))

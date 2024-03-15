@@ -1,10 +1,9 @@
 from typing import List, Tuple
 
+from entity_recognition import NamedEntity
 from neo4j import GraphDatabase
 from pydantic import BaseModel
 from streamlit_agraph import Edge, Node
-
-from ner import NamedEntity
 
 
 class Article(BaseModel):
@@ -76,3 +75,29 @@ def fetch_articles_and_relations_for_entities(entities: List[NamedEntity], uri="
     driver.close()
 
     return articles, nodes, edges
+
+
+def execute_query(query_str, user="", password="", uri="bolt://localhost:7687"):
+    driver = GraphDatabase.driver(uri, auth=(user, password))
+    
+    with driver.session() as session:
+        session.run(query_str.strip())
+        
+    driver.close()
+
+def execute_queries(queries: List[str], user="", password="", uri="bolt://localhost:7687"):
+    driver = GraphDatabase.driver(uri, auth=(user, password))
+    
+    with driver.session() as session:
+        for query in queries:
+            query = query.strip()  
+            if query:  
+                session.run(query)
+        
+    driver.close()
+
+def execute_queries_from_file(file_path, user="", password="", uri="bolt://localhost:7687"):
+    with open(file_path, 'r') as file:
+        queries = file.read().split(';') 
+        
+    return execute_queries(queries, user=user, password=password, uri=uri)

@@ -12,7 +12,7 @@ This is a PoC for creating the KG according to following diagram.
 |     |     |
 | --- | --- |
 | **KG Schema** | **Querying example** | 
-| ![KG Schema](/kg/ingestion/assets/kg_schema.png) | ![Querying Example](/kg/querying/assets/querying_example.png) |
+| ![KG Schema](/kg/assets/kg_schema.png) | ![Querying Example](/kg/assets/querying_example.png) |
 
 
 
@@ -73,8 +73,7 @@ Then navigate to http://lolcahost:3000
 
 ### Ingestion
 ```
-cd ingestion
-python main.py
+python -m src.ingest
 ```
  
 > [!TIP]  
@@ -84,9 +83,6 @@ python main.py
 
 ### Querying
 
-<still buggy>
-
 ```
-cd querying
-streamlit run app.py
+streamlit run src/app.py
 ```
