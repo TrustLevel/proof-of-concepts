@@ -63,11 +63,8 @@ if execute_button:
         for i, article in enumerate(articles):
             with columns[i]:
                 container = st.container(border=True)
-                with st.spinner('Fetching image...'):
-                    img_url = get_img_from_url(article.url)
-                    if not img_url:
-                        img_url = ''
                 container.subheader(article.title)
-                container.write(f"Mentioned: {",".join(article.mentioned_entities)}")
+                mentioned_entities = ",".join(article.mentioned_entities)
+                container.write(f"Mentioned: {mentioned_entities}")
                 container.markdown(f"**Trustlevel**: {article.trustlevel}")
                 container.markdown(f'[Open]({article.url})', unsafe_allow_html=True)
