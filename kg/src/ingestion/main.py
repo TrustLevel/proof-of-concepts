@@ -10,17 +10,17 @@ load_dotenv("../.env")
 load_dotenv(".env")
 
 from pydantic import BaseModel
-from src.entity_recognition import (NamedEntity,
-                                    get_entities_from_text)
-from src.graphdb import execute_queries, execute_query
-from src.nlp import clean_article_content
-from src.scraper import scrape_article_text
-from src.trustlevel import get_trustlevel_from_content
+
+from entity_recognition import NamedEntity, get_entities_from_text
+from graphdb import execute_queries, execute_query
+from logger import color_print
+from nlp import clean_article_content
+from scraper import scrape_article_text
+from trustlevel import get_trustlevel_from_content
 
 
 def blue_print(text: str) -> None:
-    print(f"\033[94m{text}\033[0m")
-
+    color_print(text, color='bue')
 
 class RawArticle(BaseModel):
     title: str
@@ -75,7 +75,14 @@ def generate_cypher_queries(articles: List[ProcessedArticle]) -> List[str]:
             # Adjust or enhance based on actual data availability or estimation logic
     for article in articles:
 
-        trustlevel = get_trustlevel_from_content()
+        try:
+            trustlevel = get_trustlevel_from_content(article.content)
+            if trustlevel is None:
+                trustlevel = -1
+        except Exception as e:
+            color_print(f"Error on getting trustlevel for {article.title}: {str(e)}", color='red')
+            continue
+        
         bias_score = trustlevel
         polarity_score = trustlevel
         

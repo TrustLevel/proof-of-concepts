@@ -6,10 +6,13 @@ from dotenv import load_dotenv
 load_dotenv("../.env")
 load_dotenv(".env")
 
-from entity_recognition import get_entities_from_text
-from graphdb import fetch_articles_and_relations_for_entities
-from nlp import rewrite_query
 from streamlit_agraph import Edge, Node
+
+from entity_recognition import (get_authors_and_publishers_from_text,
+                                get_entities_from_text)
+from graphdb import \
+    fetch_articles_and_relations_for_entities_authors_and_publishers
+from nlp import rewrite_query
 
 
 def draw_knowledge_graph(nodes: List[Node], edges: List[Edge]):
@@ -36,14 +39,21 @@ if execute_button:
         st.write(f"Rewritten query for NER:\n{rewritten_query}")
         
         entities = get_entities_from_text(rewritten_query)
-        if len(entities) == 0:
-            st.error("No entities found. Please try to rewrite your query.")
+        authors, publishers = get_authors_and_publishers_from_text(rewritten_query)
+
+        if (len(entities) + len(authors) + len(publishers)) == 0:
+            st.error("No entities, authors or publishers found. Please try to rewrite your query.")
             st.stop()
+
         st.write("Used entities for querying:")
         for entity in entities:
             st.write(f"- {entity.type}: {entity.text}")
+        for author in authors:
+            st.write(f"- Author: {author}")
+        for publisher in publishers:
+            st.write(f"- Publisher: {publisher}")
 
-        articles, nodes, edges, = fetch_articles_and_relations_for_entities(entities)
+        articles, nodes, edges, = fetch_articles_and_relations_for_entities_authors_and_publishers(entities, authors, publishers)
 
         st.success('Query executed successfully!')
 
@@ -60,5 +70,9 @@ if execute_button:
                 container.subheader(article.title)
                 mentioned_entities = ",".join(article.mentioned_entities)
                 container.write(f"Mentioned: {mentioned_entities}")
+                if article.author:
+                    container.write(f"Author: {article.author}")
+                if article.publisher:
+                    container.write(f"Publisher: {article.publisher}")
                 container.markdown(f"**Trustlevel**: {article.trustlevel}")
                 container.markdown(f'[Open]({article.url})', unsafe_allow_html=True)

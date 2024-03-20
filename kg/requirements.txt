@@ -1,7 +1,7 @@
 playwright
 setuptools
 wheel
-spacy
+gliner
 streamlit
 pandas
 openai

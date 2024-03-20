@@ -9,25 +9,13 @@ from dotenv import load_dotenv
 load_dotenv("../.env")
 load_dotenv(".env")
 from pydantic import BaseModel
-from src.entity_recognition import NamedEntity, get_entities_from_text
-from src.graphdb import execute_queries, execute_query
-from src.nlp import clean_article_content
-from src.scraper import scrape_article_text
-from src.trustlevel import get_trustlevel_from_content
 
-
-def color_print(text: str, color: str = "blue") -> None:
-    colors = {
-        "black": "\033[30m",
-        "red": "\033[31m",
-        "green": "\033[32m",
-        "yellow": "\033[33m",
-        "blue": "\033[34m",
-        "magenta": "\033[35m",
-        "cyan": "\033[36m",
-        "white": "\033[37m",
-    }
-    print(f"{colors.get(color, '\033[34m')}{text}\033[0m")
+from entity_recognition import NamedEntity, get_entities_from_text
+from graphdb import execute_queries, execute_query
+from logger import color_print
+from nlp import clean_article_content
+from scraper import scrape_article_text
+from trustlevel import get_trustlevel_from_content
 
 
 class RawArticle(BaseModel):
@@ -84,8 +72,11 @@ def generate_cypher_queries(articles: List[ProcessedArticle]) -> List[str]:
     # Adjust or enhance based on actual data availability or estimation logic
     for article in articles:
 
+        trustlevel = -1
         try:
             trustlevel = get_trustlevel_from_content(article.content)
+            if trustlevel is None:
+                trustlevel = -1
         except Exception as e:
             color_print(f"Error on getting trustlevel for {article.title}: {str(e)}", color='red')
             continue
@@ -101,14 +92,12 @@ def generate_cypher_queries(articles: List[ProcessedArticle]) -> List[str]:
         )
 
         author_query = (
-            f"MERGE (author:Person {{name: '{
-                article.author.replace("'", "\\'")}'}})\n"
+            f"MERGE (author:Person {{name: '{article.author.replace("'", "\\'")}'}})\n"
             f"MERGE (author)-[:WRITES]->(article)\n"
         )
 
         publisher_query = (
-            f"MERGE (publisher:Publisher {{name: '{
-                article.publisher.replace("'", "\\'")}'}})\n"
+            f"MERGE (publisher:Publisher {{name: '{article.publisher.replace("'", "\\'")}'}})\n"
             f"MERGE (publisher)-[:PUBLISHES]->(article)\n"
         )
 
@@ -123,13 +112,11 @@ def generate_cypher_queries(articles: List[ProcessedArticle]) -> List[str]:
 
             if entity_key not in merged_entities:
                 # Only generate MERGE statement if this entity hasn't been merged yet
-                entity_queries += f"MERGE ({entity.type}_{entity_text_safe.replace(' ', '_').replace(
-                    '-', '_')}:{entity.type.capitalize()} {{name: '{entity_text_safe}'}})\n"
+                entity_queries += f"MERGE ({entity.type}_{entity_text_safe.replace(' ', '_').replace('-', '_')}:{entity.type.capitalize()} {{name: '{entity_text_safe}'}})\n"
                 merged_entities.add(entity_key)
 
             # Use the entity variable for creating the relationship
-            entity_queries += f"MERGE (article)-[:MENTIONS]->({entity.type}_{
-                entity_text_safe.replace(' ', '_').replace('-', '_')})\n"
+            entity_queries += f"MERGE (article)-[:MENTIONS]->({entity.type}_{entity_text_safe.replace(' ', '_').replace('-', '_')})\n"
 
         # Combining the queries for the current row
         combined_query = article_query + author_query + publisher_query + entity_queries
@@ -162,7 +149,7 @@ def process_articles(articles: List[RawArticle]) -> List[ProcessedArticle]:
         with ProcessPoolExecutor() as executor:
             processed_articles = list(executor.map(process_article, articles))
         # Write the processed articles to the file if it was not found or could not be opened
-        with open("data/processed_input.csv", "w", newline='') as output_file:
+        with open("../data/processed_input.csv", "w", newline='') as output_file:
             fieldnames = ['Title', 'Url', 'Scraped Content',
                           'Date', 'Author', 'Publisher', 'NamedEntities']
             writer = csv.DictWriter(output_file, fieldnames=fieldnames)
@@ -184,7 +171,7 @@ def process_articles(articles: List[RawArticle]) -> List[ProcessedArticle]:
 
 
 def ingest():
-    articles = load_articles_from_file("data/input.csv")
+    articles = load_articles_from_file("../data/input.csv")
     processed_articles = process_articles(articles)
 
     queries = generate_cypher_queries(processed_articles)
