@@ -6,13 +6,12 @@ from dotenv import load_dotenv
 load_dotenv("../.env")
 load_dotenv(".env")
 
-from streamlit_agraph import Edge, Node
-
 from entity_recognition import (get_authors_and_publishers_from_text,
                                 get_entities_from_text)
 from graphdb import \
     fetch_articles_and_relations_for_entities_authors_and_publishers
 from nlp import rewrite_query
+from streamlit_agraph import Edge, Node
 
 
 def draw_knowledge_graph(nodes: List[Node], edges: List[Edge]):
@@ -55,6 +54,8 @@ if execute_button:
 
         articles, nodes, edges, = fetch_articles_and_relations_for_entities_authors_and_publishers(entities, authors, publishers)
 
+        articles.sort(key=lambda article: article.trustlevel, reverse=True)
+
         st.success('Query executed successfully!')
 
         st.subheader("Results:")
@@ -63,16 +64,25 @@ if execute_button:
         
         draw_knowledge_graph(nodes, edges)
         st.subheader("Displayed Articles:")
-        columns = st.columns(len(articles))
-        for i, article in enumerate(articles):
-            with columns[i]:
-                container = st.container(border=True)
-                container.subheader(article.title)
-                mentioned_entities = ",".join(article.mentioned_entities)
-                container.write(f"Mentioned: {mentioned_entities}")
-                if article.author:
-                    container.write(f"Author: {article.author}")
-                if article.publisher:
-                    container.write(f"Publisher: {article.publisher}")
-                container.markdown(f"**Trustlevel**: {article.trustlevel}")
-                container.markdown(f'[Open]({article.url})', unsafe_allow_html=True)
+        max_columns_per_row = 3
+        # Calculate the total number of rows needed
+        total_rows = len(articles) // max_columns_per_row + (1 if len(articles) % max_columns_per_row else 0)
+
+        for row in range(total_rows):
+            # Calculate the start and end index for articles in the current row
+            start_idx = row * max_columns_per_row
+            end_idx = min(start_idx + max_columns_per_row, len(articles))
+            # Create columns for the current row
+            columns = st.columns(max_columns_per_row)
+            for i, article in enumerate(articles[start_idx:end_idx]):
+                with columns[i]:
+                    container = st.container(border=True)
+                    container.subheader(article.title)
+                    mentioned_entities = ",".join(article.mentioned_entities)
+                    container.write(f"Mentioned: {mentioned_entities}")
+                    if article.author:
+                        container.write(f"Author: {article.author}")
+                    if article.publisher:
+                        container.write(f"Publisher: {article.publisher}")
+                    container.markdown(f"**Trustlevel**: {article.trustlevel}")
+                    container.markdown(f'[Open]({article.url})', unsafe_allow_html=True)

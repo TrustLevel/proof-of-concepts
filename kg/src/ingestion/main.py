@@ -9,12 +9,11 @@ from dotenv import load_dotenv
 load_dotenv("../.env")
 load_dotenv(".env")
 
-from pydantic import BaseModel
-
 from entity_recognition import NamedEntity, get_entities_from_text
 from graphdb import execute_queries, execute_query
 from logger import color_print
 from nlp import clean_article_content
+from pydantic import BaseModel
 from scraper import scrape_article_text
 from trustlevel import get_trustlevel_from_content
 
@@ -64,6 +63,8 @@ def process_article(article: RawArticle) -> ProcessedArticle:
     blue_print(f"Article '{article.title}' processed.")
     return ProcessedArticle(**article, content=clean_content, named_entities=named_entities)
 
+def adapt_for_memgraph(s: str):
+    return s.replace("'", "\\'").replace(' ', '_').replace('-', '_').replace('.', '').replace('’', '_')
 
 def generate_cypher_queries(articles: List[ProcessedArticle]) -> List[str]:
     queries = []
@@ -93,7 +94,7 @@ def generate_cypher_queries(articles: List[ProcessedArticle]) -> List[str]:
         )
         
         author_query = (
-            f"MERGE (author:Person {{name: '{article.author.replace("'", "\\'")}'}})\n"
+            f"MERGE (author:Person {{name: '{article.author}'}})\n"
             f"MERGE (author)-[:WRITES]->(article)\n"
         )
         
@@ -108,16 +109,18 @@ def generate_cypher_queries(articles: List[ProcessedArticle]) -> List[str]:
 
         for entity_type, entities in named_entities.items():
             for entity in entities:
-                entity_safe = entity.replace("'", "\\'")  # Make entity safe for Cypher query
+                entity_safe = adapt_for_memgraph(entity)
+                if "." in entity_safe:
+                    print('wut')  # Make entity safe for Cypher query
                 entity_key = f"{entity_type}:{entity_safe}"  # Unique key for each entity
                 
                 if entity_key not in merged_entities:
                     # Only generate MERGE statement if this entity hasn't been merged yet
-                    entity_queries += f"MERGE ({entity_type}_{entity_safe.replace(' ', '_').replace('-', '_')}:{entity_type.capitalize()} {{name: '{entity_safe}'}})\n"
+                    entity_queries += f"MERGE ({entity_type}_{entity_safe}:{entity_type.capitalize()} {{name: '{entity_safe}'}})\n"
                     merged_entities.add(entity_key)
                 
                 # Use the entity variable for creating the relationship
-                entity_queries += f"MERGE (article)-[:MENTIONS]->({entity_type}_{entity_safe.replace(' ', '_').replace('-', '_')})\n"
+                entity_queries += f"MERGE (article)-[:MENTIONS]->({entity_type}_{entity_safe})\n"
 
         # Combining the queries for the current row
         combined_query = article_query + author_query + publisher_query + entity_queries
@@ -133,7 +136,7 @@ def main():
         with open("data/processed_input.csv", "r", newline='') as input_file:
             reader = csv.DictReader(input_file)
             for row in reader:
-                processed_articles.append(ProcessedArticle(title=row['Title'], url=row['Url'], content=row['Scraped Content'], isodate=row['Date'], author=row['Author'], publisher=row['Publisher'], named_entities=row['NamedEntities']))
+                processed_articles.append(ProcessedArticle(title=row['Title'], url=row['Url'], content=row['Content'], isodate=row['Date'], author=row['Author'], publisher=row['Publisher'], named_entities=row['NamedEntities']))
         if not processed_articles:  # If the file is empty, process articles
             raise FileNotFoundError
     except (FileNotFoundError, IOError):
@@ -141,14 +144,14 @@ def main():
             processed_articles = list(executor.map(process_article, articles))
         # Write the processed articles to the file if it was not found or could not be opened
         with open("data/processed_input.csv", "w", newline='') as output_file:
-            fieldnames = ['Title', 'Url', 'Scraped Content', 'Date', 'Author', 'Publisher', 'NamedEntities']
+            fieldnames = ['Title', 'Url', 'Content', 'Date', 'Author', 'Publisher', 'NamedEntities']
             writer = csv.DictWriter(output_file, fieldnames=fieldnames)
             writer.writeheader()
             for article in processed_articles:
                 writer.writerow({
                     'Title': article.title,
                     'Url': article.url,
-                    'Scraped Content': article.content,
+                    'Content': article.content,
                     'Date': article.isodate,
                     'Author': article.author,
                     'Publisher': article.publisher,

@@ -1,6 +1,7 @@
 from typing import List, Optional, Tuple
 
 from entity_recognition import NamedEntity
+from logger import color_print
 from neo4j import GraphDatabase
 from neo4j.graph import Node
 from pydantic import BaseModel
@@ -26,8 +27,8 @@ def fetch_articles_and_relations_for_entities_authors_and_publishers(entities: L
     # Prepare node details for query
     entity_where_conditions = []
     for entity in entities:
-        if entity.text not in authors and entity.text not in publishers:
-            entity_where_conditions.append(f"(entity:{entity.type.capitalize()} AND entity.name = '{entity.text}')")
+        # if entity.text not in authors and entity.text not in publishers:
+        entity_where_conditions.append(f"(entity:{entity.type.capitalize()} AND entity.name = '{entity.text}')")
     
     query_parts = []
     return_parts = []
@@ -38,7 +39,7 @@ def fetch_articles_and_relations_for_entities_authors_and_publishers(entities: L
     if authors:
         query_parts.append("OPTIONAL MATCH (author: Person)-[r2:WRITES]->(article)")
         query_parts.append(f"WHERE author.name IN {authors}")
-        return_parts.extend(['article', 'author', 'r1'])
+        return_parts.extend(['article', 'author', 'r2'])
     if publishers:
         query_parts.append("OPTIONAL MATCH (publisher: Publisher)-[r3:PUBLISHES]->(article)")
         query_parts.append(f"WHERE publisher.name IN {publishers}")
@@ -62,7 +63,7 @@ def fetch_articles_and_relations_for_entities_authors_and_publishers(entities: L
     for record in records:
         article_node = record.get("article")
         # Initialize an empty list to collect mentioned entities for each article
-        if article_node.id not in processed_node_ids:
+        if article_node and article_node.id not in processed_node_ids:
             mentioned_entities = []
             nodes.append(Node(id=str(article_node.id),
                                 label=f"Article:{article_node.get('title', '')}",
@@ -116,25 +117,31 @@ def fetch_articles_and_relations_for_entities_authors_and_publishers(entities: L
 
 def execute_query(query_str, user="", password="", uri="bolt://localhost:7687"):
     driver = GraphDatabase.driver(uri, auth=(user, password))
-    
-    with driver.session() as session:
-        session.run(query_str.strip())
-        
-    driver.close()
+    try:
+        with driver.session() as session:
+            session.run(query_str.strip())
+    except Exception as e:
+        color_print(f"Error executing query: {query_str}\nError: {str(e)}", "red")
+    finally:
+        driver.close()
 
 def execute_queries(queries: List[str], user="", password="", uri="bolt://localhost:7687"):
     driver = GraphDatabase.driver(uri, auth=(user, password))
-    
+    color_print(f"Executing {len(queries)} queries.")
     with driver.session() as session:
         for query in queries:
             query = query.strip()  
             if query:  
-                session.run(query)
-        
+                try:
+                    session.run(query)
+                except Exception as e:
+                    color_print(f"Error executing query: {query}\nError: {str(e)}", "red")
+                    continue
+                    
     driver.close()
 
 def execute_queries_from_file(file_path, user="", password="", uri="bolt://localhost:7687"):
     with open(file_path, 'r') as file:
-        queries = file.read().split(';') 
+        queries = file.read().split(';\n') 
         
     return execute_queries(queries, user=user, password=password, uri=uri)

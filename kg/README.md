@@ -36,11 +36,6 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ``` 
 
-### Spacy (ner)
-```
-python -m spacy download en_core_web_trf
-```
-
 ### Playweight (scraper)
 ```
 python -m playwright install chromium
