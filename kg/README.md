@@ -69,7 +69,7 @@ Then navigate to http://lolcahost:3000
 ### Ingestion
 ```
 cd src
-python -m ingest
+python -m ingestion.main
 ```
  
 > [!TIP]  

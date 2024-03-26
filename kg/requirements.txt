@@ -10,3 +10,4 @@ neo4j
 stvis
 pyvis
 streamlit-agraph
+tqdm
