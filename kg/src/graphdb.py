@@ -28,7 +28,7 @@ def fetch_articles_and_relations_for_entities_authors_and_publishers(entities: L
     entity_where_conditions = []
     for entity in entities:
         # if entity.text not in authors and entity.text not in publishers:
-        entity_where_conditions.append(f"(entity:{entity.type.capitalize()} AND entity.name = '{entity.text}')")
+        entity_where_conditions.append(f"(entity:{entity.type.capitalize()} AND entity.name contains '{entity.text}')")
     
     query_parts = []
     return_parts = []
