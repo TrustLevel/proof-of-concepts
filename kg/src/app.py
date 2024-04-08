@@ -34,7 +34,7 @@ execute_button = st.button('Execute Query')
 
 if execute_button:
     with st.spinner('Executing query...'):
-        rewritten_query = rewrite_query(query)
+        rewritten_query = query # rewrite_query(query)
         st.write(f"Rewritten query for NER:\n{rewritten_query}")
         
         entities = get_entities_from_text(rewritten_query)
