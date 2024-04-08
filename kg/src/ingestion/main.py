@@ -52,6 +52,7 @@ def process_article(article: RawArticle) -> ProcessedArticle:
             article_title=article.title, article_content=scraped_content)
     named_entities = get_entities_from_text(article.content)
     color_print(f"Article '{article.title}' processed.")
+    trustlevel = None
     try:
         trustlevel = get_trustlevel_from_content(article.content)
     except Exception as e:
