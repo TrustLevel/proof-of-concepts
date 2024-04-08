@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 load_dotenv("../.env")
 load_dotenv(".env")
 
+import random
 import time
 import traceback
 
@@ -54,7 +55,7 @@ def process_article(article: RawArticle) -> ProcessedArticle:
     color_print(f"Article '{article.title}' processed.")
     trustlevel = None
     try:
-        trustlevel = get_trustlevel_from_content(article.content)
+        trustlevel = format(random.random(), '.2f')  #get_trustlevel_from_content(article.content)
     except Exception as e:
         color_print(f"Error on getting trustlevel for {article.title}: {str(e)}", color='red')
         
