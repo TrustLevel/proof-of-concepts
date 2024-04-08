@@ -44,7 +44,7 @@ def generate_cypher_query(article: ProcessedArticle) -> str:
         entity_key = f"{entity.type}:{entity.text}"
 
         if entity_key not in merged_entities:
-            entity_queries += f"MERGE ({entity.type}_{entity_text_safe}:{entity.type.capitalize()} {{name: '{entity.text}'}})\n"
+            entity_queries += f"MERGE ({entity.type}_{entity_text_safe}:{entity.type.capitalize()} {{name: '{entity.text.replace("'", "\\'")}'}})\n"
             merged_entities.add(entity_key)
 
         entity_queries += f"MERGE (article)-[:MENTIONS]->({entity.type}_{entity_text_safe})"
