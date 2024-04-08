@@ -1,8 +1,10 @@
-from typing import List, Literal, Tuple
+from typing import List, Tuple
 
-import spacy
 from gliner import GLiNER
 from pydantic import BaseModel, field_validator
+import warnings
+
+warnings.filterwarnings("ignore", message="The sentencepiece tokenizer that you are converting to a fast tokenizer uses the byte fallback option which is not implemented in the fast tokenizers.*", category=UserWarning, module='transformers.convert_slow_tokenizer')
 
 possible_entities = ['location', 'organization', 'person', 'event']
 
