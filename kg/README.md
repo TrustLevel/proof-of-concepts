@@ -36,7 +36,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ``` 
 
-### Playweight (scraper)
+### Playwright (scraper)
 ```
 python -m playwright install chromium
 ```
