@@ -3,12 +3,19 @@ import pandas as pd
 import networkx as nx
 from pyvis.network import Network
 import streamlit.components.v1 as components
+import math  # For checking NaN
 
 # Streamlit app title
 st.title("Knowledge Graph: Articles, Authors, Publishers, and Entities")
 
 # File uploader for CSV
 uploaded_file = st.file_uploader("Upload the CSV file containing articles with entities", type="csv")
+
+# Helper function to safely handle NaN values and ensure strings
+def safe_str(value):
+    if pd.isna(value) or value == '' or value is None:
+        return None
+    return str(value)
 
 # Function to build and visualize the knowledge graph
 def create_knowledge_graph(df):
@@ -17,9 +24,12 @@ def create_knowledge_graph(df):
 
     # Add nodes and edges for each article
     for index, row in df.iterrows():
-        article_node = row['title']
-        author_node = row['author']
-        publisher_node = row['publisher']
+        article_node = safe_str(row['title'])
+        author_node = safe_str(row['author'])
+        publisher_node = safe_str(row['publisher'])
+
+        if article_node is None or author_node is None or publisher_node is None:
+            continue  # Skip rows with invalid data
 
         # Add nodes
         G.add_node(article_node, label="Article", title=article_node)
@@ -32,11 +42,14 @@ def create_knowledge_graph(df):
 
         # Add entity nodes and edges for each entity type
         for entity_type in ["PERSON", "ORG", "GPE", "LOC", "DATE", "EVENT", "NORP", "PRODUCT"]:
-            if pd.notnull(row[entity_type]):  # Check if there are entities of this type
-                entities = row[entity_type].split(", ")
+            entity_column = safe_str(row[entity_type])
+            if entity_column is not None:  # Check if the entity column exists
+                entities = entity_column.split(", ")
                 for entity in entities:
-                    G.add_node(entity, label=entity_type, title=entity)
-                    G.add_edge(article_node, entity)
+                    entity_node = safe_str(entity)
+                    if entity_node is not None:
+                        G.add_node(entity_node, label=entity_type, title=entity_node)
+                        G.add_edge(article_node, entity_node)
 
     # Use pyvis to visualize the graph
     net = Network(height="600px", width="100%", notebook=False)
