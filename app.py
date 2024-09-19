@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import spacy
-from io import StringIO
 
 # Load spaCy model for English
 nlp = spacy.load("en_core_web_sm")
@@ -73,7 +72,7 @@ if uploaded_file is not None:
                     st.markdown(f"**{entity_type}:** {entity_list}")
             st.markdown("---")  # Separator between articles
 
-        # Display the extracted entities DataFrame
+        # Display the extracted entities DataFrame (with author, publisher, and trust_score included)
         st.subheader("Extracted Entities Table")
         st.dataframe(extracted_entities_df)
 
