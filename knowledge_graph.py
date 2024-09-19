@@ -71,10 +71,11 @@ def query_entities(df, entity_query):
 
     # For each entity, check if it's present in any entity column
     for entity in entities:
-        entity_present = pd.DataFrame()
+        entity_present = pd.DataFrame()  # Initialize an empty DataFrame
         for entity_type in ["PERSON", "ORG", "GPE", "LOC", "DATE", "EVENT", "NORP", "PRODUCT"]:
-            entity_present = entity_present.append(filtered_df[filtered_df[entity_type].str.contains(entity, na=False, case=False)])
-        
+            entity_match = filtered_df[filtered_df[entity_type].str.contains(entity, na=False, case=False)]
+            entity_present = pd.concat([entity_present, entity_match])
+
         # Keep only articles that contain the entity in any entity column
         filtered_df = filtered_df[filtered_df.index.isin(entity_present.index)]
 
