@@ -62,7 +62,10 @@ if uploaded_file is not None:
                 'trust_score': row['trust_score']
             }
             row_data.update(string_entities)
-            extracted_entities_df = extracted_entities_df.append(row_data, ignore_index=True)
+            
+            # Convert the row_data dict into a DataFrame and concatenate it to the existing DataFrame
+            row_df = pd.DataFrame([row_data])  # Create a DataFrame from the row data
+            extracted_entities_df = pd.concat([extracted_entities_df, row_df], ignore_index=True)  # Use pd.concat to add the row
 
             # Display the entities in the app
             for entity_type, entity_list in string_entities.items():
