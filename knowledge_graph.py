@@ -3,10 +3,9 @@ import pandas as pd
 import networkx as nx
 from pyvis.network import Network
 import streamlit.components.v1 as components
-import math  # For checking NaN
 
 # Streamlit app title
-st.title("Knowledge Graph: Articles, Authors, Publishers, and Entities")
+st.title("Knowledge Graph & Entity Query")
 
 # File uploader for CSV
 uploaded_file = st.file_uploader("Upload the CSV file containing articles with entities", type="csv")
@@ -62,6 +61,22 @@ def create_knowledge_graph(df):
     net.save_graph("knowledge_graph.html")
     return net
 
+# Function to query articles based on entity and sort by trust_score
+def query_entity(df, entity_query):
+    # Check if the entity is present in any entity column and filter the DataFrame
+    filtered_df = pd.DataFrame()
+    for entity_type in ["PERSON", "ORG", "GPE", "LOC", "DATE", "EVENT", "NORP", "PRODUCT"]:
+        entity_match = df[df[entity_type].str.contains(entity_query, na=False, case=False)]
+        filtered_df = pd.concat([filtered_df, entity_match])
+
+    # Drop duplicates if the entity is mentioned in multiple columns
+    filtered_df = filtered_df.drop_duplicates()
+
+    # Sort by trust_score in descending order
+    filtered_df = filtered_df.sort_values(by='trust_score', ascending=False)
+
+    return filtered_df
+
 # Process the uploaded CSV file
 if uploaded_file is not None:
     # Read the CSV file into a dataframe
@@ -79,5 +94,24 @@ if uploaded_file is not None:
     HtmlFile = open("knowledge_graph.html", 'r', encoding='utf-8')
     components.html(HtmlFile.read(), height=700)
 
+    # Entity Query Section
+    st.subheader("Query Articles by Entity and Trust Score")
+    
+    # Input box for the entity query
+    entity_query = st.text_input("Enter the name of the entity (e.g., a person, organization, location):")
+
+    # Process the query when the user enters an entity
+    if entity_query:
+        st.write(f"Results for entity: **{entity_query}**")
+        
+        # Query the DataFrame for articles mentioning the entity
+        result_df = query_entity(df, entity_query)
+
+        # Display the filtered and sorted results
+        if not result_df.empty:
+            st.write("Articles mentioning the entity (sorted by trust score):")
+            st.dataframe(result_df[['title', 'author', 'publisher', 'trust_score']])
+        else:
+            st.write("No articles found mentioning this entity.")
 else:
-    st.info("Please upload the CSV file to generate the knowledge graph.")
+    st.info("Please upload the CSV file to generate the knowledge graph and query entities.")
