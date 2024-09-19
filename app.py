@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import spacy
+from io import StringIO
 
 # Load spaCy model for English
 nlp = spacy.load("en_core_web_sm")
@@ -23,11 +24,9 @@ def extract_entities(text):
             entities[ent.label_].append(ent.text)
     return entities
 
-# Display the extracted entities in a structured format
-def display_entities(entities):
-    for entity_type, entity_list in entities.items():
-        if entity_list:
-            st.markdown(f"**{entity_type}:** {', '.join(set(entity_list))}")
+# Function to convert the list of entities to a comma-separated string
+def convert_entities_to_string(entities):
+    return {entity_type: ', '.join(set(entity_list)) for entity_type, entity_list in entities.items()}
 
 # Process the uploaded CSV file
 if uploaded_file is not None:
@@ -38,16 +37,50 @@ if uploaded_file is not None:
     st.subheader("Uploaded CSV Content")
     st.dataframe(df)
 
+    # Create a DataFrame to store entities for each article
+    # We add author, publisher, and trust_score to the list of columns
+    extracted_entities_df = pd.DataFrame(columns=['title', 'author', 'publisher', 'trust_score'] + ENTITY_TYPES)
+
     # Process each article and extract entities
     st.subheader("Named Entities Extracted from Articles")
 
-    # Ensure 'title' and 'text' columns exist
-    if 'title' in df.columns and 'text' in df.columns:
+    # Ensure 'title', 'text', 'author', 'publisher', and 'trust_score' columns exist
+    if all(col in df.columns for col in ['title', 'text', 'author', 'publisher', 'trust_score']):
         for index, row in df.iterrows():
             st.write(f"**Article {index + 1}:** {row['title']}")
             text = f"{row['title']} {row['text']}"  # Combine title and text for NER
             entities = extract_entities(text)
-            display_entities(entities)
+            
+            # Convert the entities to a comma-separated string for display
+            string_entities = convert_entities_to_string(entities)
+            
+            # Add the title, author, publisher, trust_score, and entities to the DataFrame for spreadsheet export
+            row_data = {
+                'title': row['title'],
+                'author': row['author'],
+                'publisher': row['publisher'],
+                'trust_score': row['trust_score']
+            }
+            row_data.update(string_entities)
+            extracted_entities_df = extracted_entities_df.append(row_data, ignore_index=True)
+
+            # Display the entities in the app
+            for entity_type, entity_list in string_entities.items():
+                if entity_list:
+                    st.markdown(f"**{entity_type}:** {entity_list}")
             st.markdown("---")  # Separator between articles
+
+        # Display the extracted entities DataFrame
+        st.subheader("Extracted Entities Table")
+        st.dataframe(extracted_entities_df)
+
+        # Provide an option to download the DataFrame as a CSV file
+        csv = extracted_entities_df.to_csv(index=False)
+        st.download_button(
+            label="Download Extracted Entities as CSV",
+            data=csv,
+            file_name='extracted_entities.csv',
+            mime='text/csv',
+        )
     else:
-        st.error("The CSV file must contain 'title' and 'text' columns.")
+        st.error("The CSV file must contain 'title', 'text', 'author', 'publisher', and 'trust_score' columns.")
