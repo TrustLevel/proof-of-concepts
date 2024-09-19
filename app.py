@@ -37,23 +37,22 @@ if uploaded_file is not None:
     st.dataframe(df)
 
     # Create a DataFrame to store entities for each article
-    # We add author, publisher, and trust_score to the list of columns
     extracted_entities_df = pd.DataFrame(columns=['title', 'author', 'publisher', 'trust_score'] + ENTITY_TYPES)
 
     # Process each article and extract entities
-    st.subheader("Named Entities Extracted from Articles")
+    st.subheader("Extracted Entities in Spreadsheet Format")
 
     # Ensure 'title', 'text', 'author', 'publisher', and 'trust_score' columns exist
     if all(col in df.columns for col in ['title', 'text', 'author', 'publisher', 'trust_score']):
         for index, row in df.iterrows():
-            st.write(f"**Article {index + 1}:** {row['title']}")
-            text = f"{row['title']} {row['text']}"  # Combine title and text for NER
+            # Combine title and text for NER
+            text = f"{row['title']} {row['text']}"
             entities = extract_entities(text)
             
-            # Convert the entities to a comma-separated string for display
+            # Convert the entities to a comma-separated string for the spreadsheet view
             string_entities = convert_entities_to_string(entities)
             
-            # Add the title, author, publisher, trust_score, and entities to the DataFrame for spreadsheet export
+            # Prepare a row with title, author, publisher, trust_score, and entities
             row_data = {
                 'title': row['title'],
                 'author': row['author'],
@@ -62,17 +61,11 @@ if uploaded_file is not None:
             }
             row_data.update(string_entities)
             
-            # Convert the row_data dict into a DataFrame and concatenate it to the existing DataFrame
-            row_df = pd.DataFrame([row_data])  # Create a DataFrame from the row data
-            extracted_entities_df = pd.concat([extracted_entities_df, row_df], ignore_index=True)  # Use pd.concat to add the row
+            # Convert row_data to a DataFrame and append to extracted_entities_df
+            row_df = pd.DataFrame([row_data])
+            extracted_entities_df = pd.concat([extracted_entities_df, row_df], ignore_index=True)
 
-            # Display the entities in the app
-            for entity_type, entity_list in string_entities.items():
-                if entity_list:
-                    st.markdown(f"**{entity_type}:** {entity_list}")
-            st.markdown("---")  # Separator between articles
-
-        # Display the extracted entities DataFrame (with author, publisher, and trust_score included)
+        # Display the extracted entities DataFrame in a spreadsheet format
         st.subheader("Extracted Entities Table")
         st.dataframe(extracted_entities_df)
 
