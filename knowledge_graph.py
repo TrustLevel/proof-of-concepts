@@ -61,21 +61,32 @@ def create_knowledge_graph(df):
     net.save_graph("knowledge_graph.html")
     return net
 
-# Function to query articles based on entity and sort by trust_score
-def query_entity(df, entity_query):
-    # Check if the entity is present in any entity column and filter the DataFrame
-    filtered_df = pd.DataFrame()
-    for entity_type in ["PERSON", "ORG", "GPE", "LOC", "DATE", "EVENT", "NORP", "PRODUCT"]:
-        entity_match = df[df[entity_type].str.contains(entity_query, na=False, case=False)]
-        filtered_df = pd.concat([filtered_df, entity_match])
+# Function to query articles based on multiple entities and sort by trust_score
+def query_entities(df, entity_query):
+    # Split the input into multiple entities (separated by commas)
+    entities = [entity.strip() for entity in entity_query.split(",")]
 
-    # Drop duplicates if the entity is mentioned in multiple columns
-    filtered_df = filtered_df.drop_duplicates()
+    # Initialize an empty DataFrame to store the combined results
+    combined_df = pd.DataFrame()
+
+    # For each entity, find matching articles and add them to the combined DataFrame
+    for entity in entities:
+        # Check if the entity is present in any entity column and filter the DataFrame
+        filtered_df = pd.DataFrame()
+        for entity_type in ["PERSON", "ORG", "GPE", "LOC", "DATE", "EVENT", "NORP", "PRODUCT"]:
+            entity_match = df[df[entity_type].str.contains(entity, na=False, case=False)]
+            filtered_df = pd.concat([filtered_df, entity_match])
+
+        # Combine the results for this entity with the overall combined DataFrame
+        combined_df = pd.concat([combined_df, filtered_df])
+
+    # Drop duplicates (if an article mentions multiple queried entities, show it only once)
+    combined_df = combined_df.drop_duplicates()
 
     # Sort by trust_score in descending order
-    filtered_df = filtered_df.sort_values(by='trust_score', ascending=False)
+    combined_df = combined_df.sort_values(by='trust_score', ascending=False)
 
-    return filtered_df
+    return combined_df
 
 # Process the uploaded CSV file
 if uploaded_file is not None:
@@ -95,23 +106,23 @@ if uploaded_file is not None:
     components.html(HtmlFile.read(), height=700)
 
     # Entity Query Section
-    st.subheader("Query Articles by Entity and Trust Score")
+    st.subheader("Query Articles by Multiple Entities and Trust Score")
     
-    # Input box for the entity query
-    entity_query = st.text_input("Enter the name of the entity (e.g., a person, organization, location):")
+    # Input box for multiple entity queries
+    entity_query = st.text_input("Enter the names of entities (comma-separated, e.g., 'Donald Trump, CNN, United States'):")
 
-    # Process the query when the user enters an entity
+    # Process the query when the user enters multiple entities
     if entity_query:
-        st.write(f"Results for entity: **{entity_query}**")
+        st.write(f"Results for entities: **{entity_query}**")
         
-        # Query the DataFrame for articles mentioning the entity
-        result_df = query_entity(df, entity_query)
+        # Query the DataFrame for articles mentioning the entities
+        result_df = query_entities(df, entity_query)
 
         # Display the filtered and sorted results
         if not result_df.empty:
-            st.write("Articles mentioning the entity (sorted by trust score):")
+            st.write("Articles mentioning the entities (sorted by trust score):")
             st.dataframe(result_df[['title', 'author', 'publisher', 'trust_score']])
         else:
-            st.write("No articles found mentioning this entity.")
+            st.write("No articles found mentioning these entities.")
 else:
     st.info("Please upload the CSV file to generate the knowledge graph and query entities.")
